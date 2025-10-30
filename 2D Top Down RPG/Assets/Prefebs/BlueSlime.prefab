@@ -222,8 +222,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.55, y: -1.46}
-  m_SizeDelta: {x: 42.74, y: 17.08}
+  m_AnchoredPosition: {x: 0, y: -6}
+  m_SizeDelta: {x: 42.74, y: 9.307}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5055139732482523551
 MonoBehaviour:
@@ -372,7 +372,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!70 &4968578615772005240
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -634,7 +634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0.000011444092, y: -0.196002}
+  m_AnchoredPosition: {x: 0.000011444092, y: -0.19600153}
   m_SizeDelta: {x: 0, y: 4.3010006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5160828399024775808
