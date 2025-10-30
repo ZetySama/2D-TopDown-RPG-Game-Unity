@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Gerekli
+using UnityEngine.InputSystem;
+using UnityEngine.UI; // <-- Butonlar için gerekli
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -7,48 +8,78 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenuPanel;
 
+    // --- 1. SADECE ÝKÝ BUTON ALANI ---
+    // Bu iki buton da ayný iþi yapacak: ResumeGame()
+    [Tooltip("Oyunu devam ettirecek olan BÝRÝNCÝ buton.")]
+    [SerializeField]
+    private Button resumeButton1;
+
+    [Tooltip("Oyunu devam ettirecek olan ÝKÝNCÝ buton.")]
+    [SerializeField]
+    private Button resumeButton2;
+    // ------------------------------------------
+
     private bool isPaused = false;
-    private PlayerControls playerControls; // Input Actions class'ýmýzýn referansý
+    private PlayerControls playerControls;
 
     void Awake()
     {
         playerControls = new PlayerControls();
     }
 
-    // Script etkinleþtiðinde çalýþýr
     void OnEnable()
     {
-        // --- DEÐÝÞÝKLÝK BURADA ---
-        // "Cancel" Action'ýný dinlemeye baþla (UI Action Map'indeki)
         playerControls.UI.Cancel.Enable();
-        playerControls.UI.Cancel.performed += ctx => TogglePauseMenu(); // Action tetiklendiðinde TogglePauseMenu'yu çaðýr
-        // -------------------------
+        playerControls.UI.Cancel.performed += ctx => TogglePauseMenu();
     }
 
-    // Script devre dýþý kaldýðýnda çalýþýr
     void OnDisable()
     {
-        // --- DEÐÝÞÝKLÝK BURADA ---
-        // "Cancel" Action'ýný dinlemeyi býrak
         playerControls.UI.Cancel.Disable();
-        // -------------------------
+        playerControls.UI.Cancel.performed -= ctx => TogglePauseMenu();
     }
 
-    // Start, TogglePauseMenu, PauseGame, ResumeGame fonksiyonlarý ayný kalabilir...
     void Start()
     {
+        // Pause panelini baþlangýçta gizle
         if (pauseMenuPanel != null)
         {
             pauseMenuPanel.SetActive(false);
         }
         Time.timeScale = 1f;
         isPaused = false;
+
+        // --- 2. ÝKÝ BUTONA DA AYNI DÝNLEYÝCÝYÝ EKLEME ---
+        if (resumeButton1 != null)
+        {
+            resumeButton1.onClick.AddListener(ResumeGame);
+        }
+
+        if (resumeButton2 != null)
+        {
+            resumeButton2.onClick.AddListener(ResumeGame);
+        }
+        // ---------------------------------------------------------
     }
+
+    void OnDestroy()
+    {
+        // Dinleyicileri temizle
+        if (resumeButton1 != null)
+        {
+            resumeButton1.onClick.RemoveListener(ResumeGame);
+        }
+
+        if (resumeButton2 != null)
+        {
+            resumeButton2.onClick.RemoveListener(ResumeGame);
+        }
+    }
+
 
     public void TogglePauseMenu()
     {
         isPaused = !isPaused;
-
         if (isPaused)
         {
             PauseGame();
@@ -70,6 +101,7 @@ public class PauseMenuController : MonoBehaviour
         Cursor.visible = true;
     }
 
+    // Bu fonksiyon artýk her iki buton tarafýndan da çaðrýlýyor.
     public void ResumeGame()
     {
         if (pauseMenuPanel != null)
@@ -78,8 +110,10 @@ public class PauseMenuController : MonoBehaviour
         }
         Time.timeScale = 1f;
         isPaused = false;
-        // Ýsteðe baðlý: Fareyi tekrar kilitle/gizle
+        // Ýsteðe baðlý olarak fareyi burada tekrar gizleyebilirsiniz
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
     }
+
+    // --- 3. QuitToMainMenu ve QuitGame fonksiyonlarý SÝLÝNDÝ ---
 }
