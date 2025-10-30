@@ -6,6 +6,9 @@
 <img width="1575" height="883" alt="image" src="https://github.com/user-attachments/assets/c8f04513-78ea-4fb3-833a-20ebb56b0d18" />
 
 
+![Oynanış GIF'i](gameplay.gif)
+
+
 
 
 
