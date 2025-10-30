@@ -1,17 +1,6 @@
 
-# [2D Top Down RPG] 
-<img width="1535" height="861" alt="image" src="https://github.com/user-attachments/assets/468eccc3-43c9-4f0e-981a-cf588293d786" />
-
-## [UI]
-<img width="1575" height="883" alt="image" src="https://github.com/user-attachments/assets/c8f04513-78ea-4fb3-833a-20ebb56b0d18" />
-
 
 ![Oynanış GIF'i](gameplay.gif)
-
-
-
-
-
 <p align="left">
   <img src="https://img.shields.io/badge/unity-%23000000.svg?style=flat&logo=unity&logoColor=white" alt="Unity"/>
   <img src="https://img.shields.io/badge/c%23-%23239120.svg?style=flat&logo=csharp&logoColor=white" alt="C#"/>
