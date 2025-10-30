@@ -10,6 +10,7 @@ public class Sword : MonoBehaviour
 
     [SerializeField] private GameObject slashAnimPrefab;
     [SerializeField] private Transform slashAnimSpawnPoint;
+    [SerializeField] private Transform weaponCollider;
 
     // Oyuncu girdilerini (örn. "Attack" butonu) yönetmek için referans.
     private PlayerControls playerControls;
@@ -83,11 +84,18 @@ public class Sword : MonoBehaviour
         // Animator'a "Attack" isimli trigger'ý (tetikleyiciyi) gönder.
         // Bu, animatördeki saldýrý animasyonunu baþlatýr.
         myAnimator.SetTrigger("Attack");
+        weaponCollider.gameObject.SetActive(true);
+
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity); 
         slashAnim.transform.parent = this.transform.parent; 
     }
 
-    public void SwingUpFlipAnim()
+    public void DoneAttackingAnimEvent()
+    {
+        weaponCollider.gameObject.SetActive(false);
+    }
+
+    public void SwingUpFlipAnimEvent()
     {
         slashAnim.gameObject.transform.rotation = Quaternion.Euler(-180, 0, 0);
 
@@ -97,7 +105,7 @@ public class Sword : MonoBehaviour
         }
     }
 
-    public void SwingDownFlipAnim()
+    public void SwingDownFlipAnimEvent()
     {
         slashAnim.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -120,10 +128,6 @@ public class Sword : MonoBehaviour
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(playerController.transform.position);
 
         // Farenin ekrandaki pozisyonu ile EKRANIN SOL ALT KÖÞESÝ (0,0) arasýndaki açýyý hesapla.
-        // DÝKKAT: Eðer açýyý oyuncuya göre hesaplamak istiyorsanýz,
-        // "Mathf.Atan2(mousePos.y, mousePos.x)" yerine
-        // "Mathf.Atan2(mousePos.y - playerScreenPoint.y, mousePos.x - playerScreenPoint.x)"
-        // kullanmanýz daha doðru bir davranýþ saðlayabilir.
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
 
         // Eðer fare, oyuncunun ekran pozisyonunun solundaysa:
@@ -132,12 +136,14 @@ public class Sword : MonoBehaviour
             // ActiveWeapon objesini Y ekseninde 180 derece döndür (ters çevir) 
             // ve Z ekseninde hesaplanan 'angle' açýsýný uygula.
             activeWeapon.transform.rotation = Quaternion.Euler(0, -180, angle);
+            weaponCollider.transform.rotation = Quaternion.Euler(0, -180, 0);
         }
         else // Eðer fare saðdaysa:
         {
             // ActiveWeapon objesini normal tut (Y'de 0 derece)
             // ve Z ekseninde hesaplanan 'angle' açýsýný uygula.
             activeWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            weaponCollider.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }

@@ -8,8 +8,6 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenuPanel;
 
-    // --- 1. SADECE ÝKÝ BUTON ALANI ---
-    // Bu iki buton da ayný iþi yapacak: ResumeGame()
     [Tooltip("Oyunu devam ettirecek olan BÝRÝNCÝ buton.")]
     [SerializeField]
     private Button resumeButton1;
@@ -17,7 +15,10 @@ public class PauseMenuController : MonoBehaviour
     [Tooltip("Oyunu devam ettirecek olan ÝKÝNCÝ buton.")]
     [SerializeField]
     private Button resumeButton2;
-    // ------------------------------------------
+
+    [Tooltip("Oyundan çýkartan buton.")] // Tooltip eklemek iyi bir pratik
+    [SerializeField]
+    private Button quitGame;
 
     private bool isPaused = false;
     private PlayerControls playerControls;
@@ -49,7 +50,7 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
-        // --- 2. ÝKÝ BUTONA DA AYNI DÝNLEYÝCÝYÝ EKLEME ---
+        // --- Resume Butonlarý ---
         if (resumeButton1 != null)
         {
             resumeButton1.onClick.AddListener(ResumeGame);
@@ -59,7 +60,12 @@ public class PauseMenuController : MonoBehaviour
         {
             resumeButton2.onClick.AddListener(ResumeGame);
         }
-        // ---------------------------------------------------------
+
+        // --- DÜZELTME 1: Doðru fonksiyonu baðla ---
+        if (quitGame != null)
+        {
+            quitGame.onClick.AddListener(QuitGame); // Application.Quit deðil, QuitGame olmalý
+        }
     }
 
     void OnDestroy()
@@ -73,6 +79,12 @@ public class PauseMenuController : MonoBehaviour
         if (resumeButton2 != null)
         {
             resumeButton2.onClick.RemoveListener(ResumeGame);
+        }
+
+        // --- DÜZELTME 3: QuitGame dinleyicisini de kaldýr ---
+        if (quitGame != null)
+        {
+            quitGame.onClick.RemoveListener(QuitGame);
         }
     }
 
@@ -101,7 +113,6 @@ public class PauseMenuController : MonoBehaviour
         Cursor.visible = true;
     }
 
-    // Bu fonksiyon artýk her iki buton tarafýndan da çaðrýlýyor.
     public void ResumeGame()
     {
         if (pauseMenuPanel != null)
@@ -110,10 +121,12 @@ public class PauseMenuController : MonoBehaviour
         }
         Time.timeScale = 1f;
         isPaused = false;
-        // Ýsteðe baðlý olarak fareyi burada tekrar gizleyebilirsiniz
-        // Cursor.lockState = CursorLockMode.Locked;
-        // Cursor.visible = false;
     }
 
-    // --- 3. QuitToMainMenu ve QuitGame fonksiyonlarý SÝLÝNDÝ ---
+    // --- DÜZELTME 2: Debug.Log'u baþa al ---
+    public void QuitGame()
+    {
+        Debug.Log("Oyun kapatýldý."); // ÖNCE LOG AT
+        Application.Quit(); // SONRA KAPAT
+    }
 }
