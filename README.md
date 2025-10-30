@@ -1,6 +1,6 @@
 
 
-![Oynanış GIF'i](gameplay_v3.gif)
+![Oynanış GIF'i](gameplay.gif)
 <p align="left">
   <img src="https://img.shields.io/badge/unity-%23000000.svg?style=flat&logo=unity&logoColor=white" alt="Unity"/>
   <img src="https://img.shields.io/badge/c%23-%23239120.svg?style=flat&logo=csharp&logoColor=white" alt="C#"/>
