@@ -1,5 +1,5 @@
 
-
+##  GamePlay
 ![Oynanış GIF'i](gameplay.gif)
 <p align="left">
   <img src="https://img.shields.io/badge/unity-%23000000.svg?style=flat&logo=unity&logoColor=white" alt="Unity"/>
