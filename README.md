@@ -15,19 +15,6 @@
 * **Grafik/Tasarım:** Aseprite (Pixel Art)
 * **Versiyon Kontrol:** Git & GitHub
 
-## 🏃‍♀️ Projeyi Çalıştırma (Getting Started)
-
-Bu projeyi yerel makinenizde çalıştırmak için:
-
-1.  Bu repoyu klonlayın:
-    ```sh
-    git clone [https://github.com/](https://github.com/)[ZetySama]/[2D-TopDown-RPG-Game-Unity].git
-    ```
-2.  Projeyi **Unity Hub** üzerinden açın.
-3.  Proje için doğru Unity sürümünün (`[6000.2.9f11]`) yüklü olduğundan emin olun.
-4.  `Assets/Scenes/` klasörü altındaki `[SampleScene]` sahnesini açın.
-5.  Unity Editör'de "Play" tuşuna basın.
-
 ---
 
 ## 📜 Lisans
