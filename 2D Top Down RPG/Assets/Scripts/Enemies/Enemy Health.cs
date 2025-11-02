@@ -6,23 +6,18 @@ using UnityEngine.UI; // <-- UI (Slider) için gerekli
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int startingHealth = 3;
-
     [Tooltip("Düþmanýn can barýný gösterecek olan Slider objesi")]
     [SerializeField] private Slider healthSlider;
-
     private int currentHealth;
-
-    // --- KNOCKBACK SÝSTEMÝ ÝÇÝN EKLENDÝ (Resimden) ---
     private Knockback knockback;
-    // ----------------------------------------------
+    private Flash flash;
 
-    // --- KNOCKBACK BÝLEÞENÝNÝ BULMAK ÝÇÝN EKLENDÝ (Resimden) ---
     private void Awake()
     {
         knockback = GetComponent<Knockback>();
+        flash = GetComponent<Flash>();
     }
-    // --------------------------------------------------------
-
+  
     private void Start()
     {
         currentHealth = startingHealth;
@@ -56,10 +51,10 @@ public class EnemyHealth : MonoBehaviour
         // --------------------------------------
 
         Debug.Log("Düþmanýn caný: " + currentHealth); // Debug mesajý
-        DetectDeath(); // Ölüm kontrolünü çaðýr
+        StartCoroutine(flash.FlashRoutine());
     }
 
-    private void DetectDeath()
+    public void DetectDeath()
     {
         if (currentHealth <= 0)
         {

@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 1860789903011541024}
   - component: {fileID: 7722474507068244181}
   - component: {fileID: 1717330964934735389}
+  - component: {fileID: 607623800710223601}
   m_Layer: 0
   m_Name: BlueSlime
   m_TagString: Untagged
@@ -364,7 +365,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -1468931158, guid: f4e859bd1b8db634faeb1f6c4c29bdf3, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.040611744, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -511,7 +512,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad4cc626ece13f4598bb306ea3492fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KnockBack
-  knockBackTime: 0.1
+  knockBackTime: 0.15
+--- !u!114 &607623800710223601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310946261720273467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725ec1a2bb088aa42b15fe55d6d5fccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Flash
+  whiteFlashMat: {fileID: 2100000, guid: 79fde13af08230544bafc0e2e440aa49, type: 2}
+  restoreDefaultMatTime: 0.15
 --- !u!1 &8359857206716002955
 GameObject:
   m_ObjectHideFlags: 0
