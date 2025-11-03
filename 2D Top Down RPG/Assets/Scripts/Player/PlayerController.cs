@@ -10,21 +10,30 @@ public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; }
     public static PlayerController Instance;
 
     [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float dashSpeed = 4f;
+    [SerializeField] private TrailRenderer myTrailRenderer;
 
     private PlayerControls playerControls;
     private Vector2 movement;
     private Rigidbody2D rb;
     private Animator myAanimator;
     private SpriteRenderer mySpriteRender;
-    private bool facingLeft = false;
 
-private void Awake()
+    private bool facingLeft = false;
+    private bool isDashing = false;
+
+    private void Awake()
     {
         Instance = this;
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         myAanimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>(); 
+    }
+
+    private void Start()
+    {
+        playerControls.Combat.Dash.performed += _ => Dash();
     }
 
     private void OnEnable()
@@ -71,5 +80,27 @@ private void Awake()
             FacingLeft = false;
     }
 
+    }
+    private void Dash()
+    {
+        if (!isDashing)
+        {
+            isDashing = true;
+            moveSpeed *= dashSpeed;
+            myTrailRenderer.emitting = true;
+            StartCoroutine(EndDashRoutine());
+        }
+    }
+
+
+    private IEnumerator EndDashRoutine()
+    {
+        float dashTime = .2f;
+        float dashCD = .25f;
+        yield return new WaitForSeconds(dashTime);
+        moveSpeed /= dashSpeed;
+        myTrailRenderer.emitting = false;
+        yield return new WaitForSeconds(dashCD);
+        isDashing = false;
     }
 }
