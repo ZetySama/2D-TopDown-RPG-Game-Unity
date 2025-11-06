@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445fa18647bf6284e9fe3580aa92abed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPathFinding
-  moveSpeed: 2.5
+  moveSpeed: 3
 --- !u!95 &1860789903011541024
 Animator:
   serializedVersion: 7
