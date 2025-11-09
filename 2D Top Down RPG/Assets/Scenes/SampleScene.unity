@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 42329810}
   - component: {fileID: 42329811}
   - component: {fileID: 42329812}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,6 +490,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSlime (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -720,6 +724,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1112,6 +1120,7 @@ GameObject:
   - component: {fileID: 210636101}
   - component: {fileID: 210636097}
   - component: {fileID: 210636103}
+  - component: {fileID: 210636104}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1308,6 +1317,103 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_SortAtRoot: 0
+--- !u!82 &210636104
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210636096}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &211136670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1008221632642802974, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
@@ -2603,6 +2709,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSlime (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2858,6 +2968,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3126,6 +3240,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3527,6 +3645,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSlime (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3607,6 +3729,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3763,6 +3889,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4638,7 +4768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0099487305, y: -0.005004883}
+  m_AnchoredPosition: {x: -0.010009766, y: -0.005004883}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &806505478
@@ -5106,6 +5236,7 @@ MonoBehaviour:
   slashAnimPrefab: {fileID: 8978043672387764378, guid: 0bc392d59d88bd64fb74a716570cfa1a, type: 3}
   slashAnimSpawnPoint: {fileID: 896718146}
   weaponCollider: {fileID: 42329810}
+  swordSwingSound: {fileID: 8300000, guid: 4c96e663e4277ef458a722bd3a827fe3, type: 3}
 --- !u!212 &886574194
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5253,6 +5384,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -44417,6 +44552,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSlime (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -45174,7 +45313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 727, y: -380}
+  m_AnchoredPosition: {x: 740.9, y: 410.3}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1180930685
@@ -45263,6 +45402,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -45515,6 +45658,10 @@ PrefabInstance:
     - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_Name
       value: BlueSlime (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
@@ -45907,6 +46054,7 @@ GameObject:
   - component: {fileID: 1529700942}
   - component: {fileID: 1529700943}
   - component: {fileID: 1529700944}
+  - component: {fileID: 1529700945}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -46011,6 +46159,30 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
+--- !u!114 &1529700945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529700940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 1
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1574064122
 GameObject:
   m_ObjectHideFlags: 0
@@ -46548,6 +46720,10 @@ PrefabInstance:
     - target: {fileID: 8978043672387764378, guid: 0bc392d59d88bd64fb74a716570cfa1a, type: 3}
       propertyPath: m_Name
       value: Slash Prefeb
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978043672387764378, guid: 0bc392d59d88bd64fb74a716570cfa1a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -53486,6 +53662,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSlime (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -53886,6 +54066,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueSlime (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 6310946261720273467, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8083820211934985817, guid: 75f834adfa74d9b44979e26a6bcc95c8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -53938,8 +54122,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.259094, y: -1.4017029}
-  m_SizeDelta: {x: 14.3719, y: 77.3597}
+  m_AnchoredPosition: {x: 4.259094, y: 1.072403}
+  m_SizeDelta: {x: 14.3719, y: 41.7351}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2085932163
 MonoBehaviour:

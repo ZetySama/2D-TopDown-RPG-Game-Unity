@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 7722474507068244181}
   - component: {fileID: 1717330964934735389}
   - component: {fileID: 607623800710223601}
+  - component: {fileID: 5862863066949647131}
   m_Layer: 0
   m_Name: BlueSlime
   m_TagString: Untagged
@@ -527,6 +528,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Flash
   whiteFlashMat: {fileID: 2100000, guid: 79fde13af08230544bafc0e2e440aa49, type: 2}
   restoreDefaultMatTime: 0.15
+--- !u!114 &5862863066949647131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310946261720273467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCollisionImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 0
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 3
+    DissipationRate: 0
+    RawSignal: {fileID: 11400000, guid: 1275be03c0133c74ea95c4f67c4cd1e8, type: 2}
+    AmplitudeGain: 1.5
+    FrequencyGain: 1.5
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -1.0660328
+          outSlope: -1.0660328
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1.0660328
+          outSlope: -1.0660328
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0.1
+      SustainTime: 0.1
+      DecayTime: 0.2
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  IgnoreTag: 
+  UseImpactDirection: 0
+  ScaleImpactWithMass: 0
+  ScaleImpactWithSpeed: 0
 --- !u!1 &8359857206716002955
 GameObject:
   m_ObjectHideFlags: 0
