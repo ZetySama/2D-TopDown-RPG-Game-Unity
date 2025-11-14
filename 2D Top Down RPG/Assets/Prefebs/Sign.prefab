@@ -449,6 +449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabelaEtkilesim
   textBaloonObject: {fileID: 3702311638523617079}
+  textComponent: {fileID: 4005870800786271852}
+  signMessage: 
   triggerAlan: {fileID: 7741334057836823606}
 --- !u!1 &9021173021504811320
 GameObject:

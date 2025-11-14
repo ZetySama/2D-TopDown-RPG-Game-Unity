@@ -1,17 +1,35 @@
 using UnityEngine;
+using TMPro; // <-- 1. TextMeshPro kullanmak için bunu ekleyin
 
 public class TabelaEtkilesim : MonoBehaviour
 {
+    [Header("Görsel Ayarlar")]
     [Tooltip("Player yaklaþtýðýnda aktif olacak olan 'Text Balon' objesi.")]
-    [SerializeField] private GameObject textBaloonObject;
+    [SerializeField] private GameObject textBaloonObject; //
 
-    [Tooltip("Hangi collider'ýn algýlama için kullanýlacaðýný seçin (Capsule Collider 2D).")]
+    [Tooltip("Metnin yazýlacaðý 'Text (TMP)' bileþeni.")]
+    [SerializeField] private TextMeshProUGUI textComponent; // <-- 2. YENÝ ALAN (Text (TMP) objesini buraya atýn)
+
+    [Header("Tabela Metni")]
+    [Tooltip("Bu tabelada gösterilecek olan asýl metin.")]
+    [SerializeField]
+    [TextArea(3, 5)] // Inspector'da 3-5 satýrlýk bir kutu açar
+    private string signMessage; // <-- 3. YENÝ ALAN (Metni buraya yazacaksýnýz)
+
+    [Header("Tetikleme Ayarlarý")]
+    [Tooltip("Hangi collider'ýn algýlama için kullanýlacaðýný seçin.")]
     [SerializeField] private CapsuleCollider2D triggerAlan;
-    // Not: Bu satýrý eklemek, hangi collider'ýn ne iþ yaptýðýný garantiler.
 
-    // Oyun baþladýðýnda baloncuðu gizle
+    // Oyun baþladýðýnda metni ayarla ve baloncuðu gizle
     private void Start()
     {
+        // 1. Metni ayarla
+        if (textComponent != null)
+        {
+            textComponent.text = signMessage;
+        }
+
+        // 2. Baloncuðu gizle
         if (textBaloonObject != null)
         {
             textBaloonObject.SetActive(false);
