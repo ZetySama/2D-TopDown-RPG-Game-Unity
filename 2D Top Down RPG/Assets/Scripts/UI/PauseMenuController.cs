@@ -1,24 +1,28 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI; // <-- Butonlar için gerekli
+using UnityEngine.UI;
 
+// Bu script'in olduðu objeye bir AudioSource bileþeni eklemeyi zorunlu kýlar
+[RequireComponent(typeof(AudioSource))]
 public class PauseMenuController : MonoBehaviour
 {
     [Tooltip("Durdurma menüsü olarak açýlýp kapanacak olan UI Paneli.")]
     [SerializeField]
     private GameObject pauseMenuPanel;
 
-    [Tooltip("Oyunu devam ettirecek olan BÝRÝNCÝ buton.")]
-    [SerializeField]
-    private Button resumeButton1;
+    // --- BUTONLARINIZ ---
+    [SerializeField] private Button resumeButton1;
+    [SerializeField] private Button resumeButton2;
+    [SerializeField] private Button quitGame;
 
-    [Tooltip("Oyunu devam ettirecek olan ÝKÝNCÝ buton.")]
+    // --- YENÝ MÜZÝK ALANLARI ---
+    [Tooltip("Duraklatma menüsü açýldýðýnda çalacak olan müzik klibi.")]
     [SerializeField]
-    private Button resumeButton2;
+    private AudioClip pauseMusicClip;
 
-    [Tooltip("Oyundan çýkartan buton.")] // Tooltip eklemek iyi bir pratik
-    [SerializeField]
-    private Button quitGame;
+    // Bu script'in AudioSource'u, pause müziðini çalmak için kullanýlacak
+    private AudioSource pauseAudioSource;
+    // ----------------------------
 
     private bool isPaused = false;
     private PlayerControls playerControls;
@@ -26,8 +30,28 @@ public class PauseMenuController : MonoBehaviour
     void Awake()
     {
         playerControls = new PlayerControls();
+
+        // --- YENÝ MÜZÝK AYARI ---
+        // Bu objenin üzerindeki AudioSource bileþenini al
+        pauseAudioSource = GetComponent<AudioSource>();
+
+        // Bu AudioSource'un, oyun durduðunda bile çalýþmasýný saðla
+        // (AudioListener.pause komutundan etkilenmeyecek)
+        pauseAudioSource.ignoreListenerPause = true;
+
+        // Müziðin döngüye girmesini (sürekli çalmasýný) saðla
+        pauseAudioSource.loop = true;
+
+        // Inspector'dan atadýðýmýz klibi bu AudioSource'a ata
+        if (pauseMusicClip != null)
+        {
+            pauseAudioSource.clip = pauseMusicClip;
+        }
+        // -------------------------
     }
 
+    // OnEnable, OnDisable, Start, OnDestroy metotlarýnýz ayný
+    #region Standart Metotlar
     void OnEnable()
     {
         playerControls.UI.Cancel.Enable();
@@ -42,7 +66,6 @@ public class PauseMenuController : MonoBehaviour
 
     void Start()
     {
-        // Pause panelini baþlangýçta gizle
         if (pauseMenuPanel != null)
         {
             pauseMenuPanel.SetActive(false);
@@ -50,44 +73,20 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
-        // --- Resume Butonlarý ---
-        if (resumeButton1 != null)
-        {
-            resumeButton1.onClick.AddListener(ResumeGame);
-        }
-
-        if (resumeButton2 != null)
-        {
-            resumeButton2.onClick.AddListener(ResumeGame);
-        }
-
-        // --- DÜZELTME 1: Doðru fonksiyonu baðla ---
-        if (quitGame != null)
-        {
-            quitGame.onClick.AddListener(QuitGame); // Application.Quit deðil, QuitGame olmalý
-        }
+        if (resumeButton1 != null) { resumeButton1.onClick.AddListener(ResumeGame); }
+        if (resumeButton2 != null) { resumeButton2.onClick.AddListener(ResumeGame); }
+        if (quitGame != null) { quitGame.onClick.AddListener(QuitGame); }
     }
 
     void OnDestroy()
     {
-        // Dinleyicileri temizle
-        if (resumeButton1 != null)
-        {
-            resumeButton1.onClick.RemoveListener(ResumeGame);
-        }
-
-        if (resumeButton2 != null)
-        {
-            resumeButton2.onClick.RemoveListener(ResumeGame);
-        }
-
-        // --- DÜZELTME 3: QuitGame dinleyicisini de kaldýr ---
-        if (quitGame != null)
-        {
-            quitGame.onClick.RemoveListener(QuitGame);
-        }
+        if (resumeButton1 != null) { resumeButton1.onClick.RemoveListener(ResumeGame); }
+        if (resumeButton2 != null) { resumeButton2.onClick.RemoveListener(ResumeGame); }
+        if (quitGame != null) { quitGame.onClick.RemoveListener(QuitGame); }
     }
+    #endregion
 
+    // --- ASIL DEÐÝÞÝKLÝKLER BU ÝKÝ METOTTA ---
 
     public void TogglePauseMenu()
     {
@@ -104,29 +103,50 @@ public class PauseMenuController : MonoBehaviour
 
     void PauseGame()
     {
-        if (pauseMenuPanel != null)
-        {
-            pauseMenuPanel.SetActive(true);
-        }
+        // Eski kodunuz (Paneli aç, zamaný durdur)
+        if (pauseMenuPanel != null) { pauseMenuPanel.SetActive(true); }
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        // --- YENÝ SES KONTROLÜ ---
+        // Sahnedeki (ignoreListenerPause = false olan) TÜM sesleri durdur
+        AudioListener.pause = true;
+
+        // Sadece pause müziðini çal
+        if (pauseAudioSource != null && pauseMusicClip != null)
+        {
+            pauseAudioSource.Play();
+        }
+        // ----------------------------
     }
 
     public void ResumeGame()
     {
-        if (pauseMenuPanel != null)
-        {
-            pauseMenuPanel.SetActive(false);
-        }
+        // Eski kodunuz (Paneli kapa, zamaný baþlat)
+        if (pauseMenuPanel != null) { pauseMenuPanel.SetActive(false); }
         Time.timeScale = 1f;
         isPaused = false;
+
+        // --- YENÝ SES KONTROLÜ ---
+        // Durdurulan tüm sahne seslerini devam ettir
+        AudioListener.pause = false;
+
+        // Pause müziðini durdur
+        if (pauseAudioSource != null)
+        {
+            pauseAudioSource.Stop();
+        }
+        // ----------------------------
     }
 
-    // --- DÜZELTME 2: Debug.Log'u baþa al ---
     public void QuitGame()
     {
-        Debug.Log("Oyun kapatýldý."); // ÖNCE LOG AT
-        Application.Quit(); // SONRA KAPAT
+        // ÖNEMLÝ: Oyundan çýkmadan önce sesleri ve zamaný normale döndür
+        AudioListener.pause = false;
+        Time.timeScale = 1f;
+
+        Debug.Log("Oyun kapatýldý.");
+        Application.Quit();
     }
 }
