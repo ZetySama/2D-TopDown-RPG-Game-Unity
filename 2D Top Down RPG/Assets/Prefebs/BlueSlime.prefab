@@ -553,8 +553,8 @@ MonoBehaviour:
     ImpulseType: 3
     DissipationRate: 0
     RawSignal: {fileID: 11400000, guid: 1275be03c0133c74ea95c4f67c4cd1e8, type: 2}
-    AmplitudeGain: 1.5
-    FrequencyGain: 1.5
+    AmplitudeGain: 1.2
+    FrequencyGain: 1
     RepeatMode: 0
     Randomize: 1
     TimeEnvelope:
