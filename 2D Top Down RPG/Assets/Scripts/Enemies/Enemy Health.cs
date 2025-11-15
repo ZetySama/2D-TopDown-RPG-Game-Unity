@@ -6,8 +6,22 @@ using UnityEngine.UI; // <-- UI (Slider) için gerekli
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int startingHealth = 3;
-    [Tooltip("Düþmanýn can barýný gösterecek olan Slider objesi")]
     [SerializeField] private Slider healthSlider;
+
+
+    [Tooltip("Ölüm animasyonunun yaklaþýk ne kadar sürdüðü (saniye).")]
+    [SerializeField] private float deathAnimationTime = 1f;
+    private Animator myAnimator;
+    private Collider2D myCollider;
+    private EnemyPathfinding pathfinding;
+    private Rigidbody2D rb;
+    private bool isDead = false;
+
+    // --- SES DEÐÝÞKENLERÝ ---
+    [SerializeField] private AudioSource deathsound;
+    [SerializeField] private AudioSource takeDamageSound; // <-- YENÝ (Hasar alma sesini buraya atayýn)
+    // -------------------------
+
     private int currentHealth;
     private Knockback knockback;
     private Flash flash;
@@ -16,51 +30,95 @@ public class EnemyHealth : MonoBehaviour
     {
         knockback = GetComponent<Knockback>();
         flash = GetComponent<Flash>();
+        myAnimator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider2D>();
+        pathfinding = GetComponent<EnemyPathfinding>();
+        rb = GetComponent<Rigidbody2D>();
     }
-  
+
     private void Start()
     {
         currentHealth = startingHealth;
-
-        // Slider'ý baþlangýçta ayarla
         if (healthSlider != null)
         {
-            healthSlider.maxValue = startingHealth; // Slider'ýn maksimum deðerini ayarla
-            healthSlider.value = currentHealth;   // Slider'ýn mevcut deðerini ayarla
+            healthSlider.maxValue = startingHealth;
+            healthSlider.value = currentHealth;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        // Caný azalt
+        // Eðer zaten ölüyorsa, tekrar hasar almasýn (ve ses çalmasýn)
+        if (isDead) return;
+
+        // --- YENÝ EKLENEN KISIM ---
+        // Hasar aldýðýnda sesi çal
+        if (takeDamageSound != null)
+        {
+            takeDamageSound.Play();
+        }
+        // -------------------------
+
         currentHealth -= damage;
 
-        // Can barýný (Slider) güncelle
         if (healthSlider != null)
         {
-            healthSlider.value = currentHealth; // Slider'ýn deðerini yeni cana eþitle
+            healthSlider.value = currentHealth;
         }
 
-        // --- KNOCKBACK'Ý TETÝKLE (Resimden) ---
-        // (knockback bileþeninin var olduðundan emin olarak)
         if (knockback != null)
         {
-            // PlayerController'ýnýzýn 'Instance' (Singleton) kullandýðýný varsayarak
             knockback.GetKnockedBack(PlayerController.Instance.transform, 15f);
         }
-        // --------------------------------------
 
-        Debug.Log("Düþmanýn caný: " + currentHealth); // Debug mesajý
         StartCoroutine(flash.FlashRoutine());
     }
 
     public void DetectDeath()
     {
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
-            // Ölüm iþlemleri
+            isDead = true;
             Debug.Log(gameObject.name + " öldü!");
-            Destroy(gameObject);
+
+            // 1. Animasyonu tetikle
+            if (myAnimator) myAnimator.SetTrigger("Death");
+
+            // 2. Ölüm sesini çal
+            if (deathsound) deathsound.Play();
+
+            // 3. Düþmaný "pasif" hale getir
+            if (pathfinding) pathfinding.enabled = false;
+            if (myCollider) myCollider.enabled = false;
+            if (rb) rb.velocity = Vector2.zero;
+            if (knockback) knockback.enabled = false;
+
+            // 4. Can barýný gizle
+            if (healthSlider != null)
+            {
+                healthSlider.gameObject.SetActive(false);
+            }
+
+            StartCoroutine(DestroyAfterAnimation(deathAnimationTime));
         }
+    }
+
+    private IEnumerator DestroyAfterAnimation(float animationDelay)
+    {
+        float soundDelay = 0f;
+
+        // Ölüm sesi klibinin uzunluðunu al
+        if (deathsound != null && deathsound.clip != null)
+        {
+            soundDelay = deathsound.clip.length;
+        }
+
+        // Animasyon ve ses süresinden en uzun olaný bekle
+        float timeToWait = Mathf.Max(animationDelay, soundDelay);
+
+        yield return new WaitForSeconds(timeToWait);
+
+        // Obje bittikten sonra yok et
+        Destroy(gameObject);
     }
 }
