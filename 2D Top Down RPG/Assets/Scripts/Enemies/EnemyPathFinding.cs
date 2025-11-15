@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPathfinding : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 2f;
+    public float moveSpeed = 2f;
 
     private Rigidbody2D rb;
     private Vector2 moveDir;

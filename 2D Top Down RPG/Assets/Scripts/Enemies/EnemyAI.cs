@@ -2,61 +2,193 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Düþmanýn yapay zeka davranýþlarýný yöneten ana sýnýf.
 public class EnemyAI : MonoBehaviour
 {
-    // Düþmanýn o an içinde bulunabileceði durumlarý tanýmlar.
-    // Þimdilik sadece "Roaming" (Gezinme) durumu var.
-    private enum State
+    private enum EnemyState { Patrol, Chase, Attack }
+    private EnemyState currentState;
+
+    // --- Referanslar ---
+    private Transform playerTransform;
+    private EnemyPathfinding pathfinding; //
+    private Animator myAnimator;
+    private Knockback knockback; //
+    private Rigidbody2D rb; //
+
+    // --- AI Ayarlarý (Inspector'dan deðiþecek) ---
+    [Header("Mesafe Ayarlarý")]
+    [Tooltip("Düþmanýn oyuncuyu fark edeceði (takibe baþlayacaðý) mesafe.")]
+    [SerializeField] private float detectionRange = 10f;
+    [Tooltip("Düþmanýn durup saldýracaðý mesafe (detectionRange'den küçük olmalý).")]
+    [SerializeField] private float attackRange = 4f; //
+    [Tooltip("Sadece 'Player' katmanýný algýlamak için.")]
+    [SerializeField] private LayerMask playerLayer; //
+
+    [Header("Saldýrý Ayarlarý")]
+    [Tooltip("Ýki saldýrý arasýndaki bekleme süresi (saniye).")]
+    [SerializeField] private float attackCooldown = 1.5f; //
+    [Tooltip("Saldýrý sýrasýnda atýlma (lunge) kuvveti.")]
+    [SerializeField] private float lungeForce = 5f; //
+    private float timeSinceLastAttack = 0f;
+
+    [Header("Hareket Ayarlarý")] // <-- BAÞLIÐI GÜNCELLEDÝM
+    [Tooltip("Devriye atarken kullanýlacak hareket hýzý.")]
+    [SerializeField] private float patrolMoveSpeed = 1f;
+    [Tooltip("Oyuncuyu kovalarken kullanýlacak hareket hýzý.")]
+    [SerializeField] private float chaseMoveSpeed = 3f; // <-- YENÝ EKLENEN DEÐÝÞKEN
+    [Tooltip("Bir devriye noktasýna ulaþtýktan sonra bekleme süresi.")]
+    [SerializeField] private float patrolWaitTime = 2f;
+    [Tooltip("Baþlangýç noktasýndan ne kadar uzaða devriye atabileceði.")]
+    [SerializeField] private float patrolRadius = 5f;
+
+    private Vector2 startPosition;
+    private Vector2 currentPatrolTarget;
+    private float timeSinceArrivedAtPatrolPoint = 0f;
+
+
+    void Awake()
     {
-        Roaming
+        pathfinding = GetComponent<EnemyPathfinding>(); //
+        myAnimator = GetComponent<Animator>();
+        knockback = GetComponent<Knockback>(); //
+        rb = GetComponent<Rigidbody2D>(); //
     }
 
-    // Düþmanýn mevcut durumunu (state) saklamak için bir deðiþken.
-    private State state;
-    // Düþmanýn fiziksel hareketini yönetecek olan script'e eriþim için.
-    private EnemyPathfinding enemyPathfinding;
-
-    // Oyun baþladýðýnda veya nesne aktif olduðunda bir kez çalýþýr.
-    private void Awake()
+    void Start()
     {
-        // Bu objeye ekli olan "EnemyPathfinding" bileþenini bul ve deðiþkene ata.
-        enemyPathfinding = GetComponent<EnemyPathfinding>();
-        // Baþlangýç durumunu "Roaming" olarak ayarla.
-        state = State.Roaming;
-    }
-
-    // Awake'den sonra ve ilk Update'den önce bir kez çalýþýr.
-    private void Start()
-    {
-        // Gezinme davranýþýný yönetecek olan Coroutine'i (eþ zamanlý fonksiyon) baþlat.
-        StartCoroutine(RoamingRoutine());
-    }
-
-    // Belirli aralýklarla tekrarlanan gezinme iþlemini yönetir.
-    private IEnumerator RoamingRoutine()
-    {
-        // Düþmanýn durumu "Roaming" olduðu sürece bu döngü devam eder.
-        while (state == State.Roaming)
+        if (PlayerController.Instance != null)
         {
-            // Gidilecek rastgele yeni bir pozisyon belirle.
-            Vector2 roamPosition = GetRoamingPosition();
+            playerTransform = PlayerController.Instance.transform; //
+        }
+        else
+        {
+            Debug.LogError(gameObject.name + " objesi Player'ý bulamadý!");
+        }
 
-            // Hareket script'ine (EnemyPathfinding) yeni hedef pozisyonu ilet.
-            enemyPathfinding.MoveTo(roamPosition);
+        currentState = EnemyState.Patrol;
+        startPosition = transform.position;
+        SetNewPatrolPoint();
+    }
 
-            // Yeni bir pozisyona gitmeden önce 2 saniye bekle.
-            // Bu, düþmanýn sürekli titremesini engeller ve ona "düþünme" süresi verir.
-            yield return new WaitForSeconds(2f);
+
+    // 2. Karar Verme (Her frame çalýþýr)
+    void Update()
+    {
+        if (playerTransform == null) return;
+        if (knockback != null && knockback.gettingKnockedBack) //
+        {
+            return;
+        }
+
+        EnemyState previousState = currentState;
+        bool isPlayerInAttackRange = Physics2D.OverlapCircle(transform.position, attackRange, playerLayer);
+        bool isPlayerInDetectionRange = Physics2D.OverlapCircle(transform.position, detectionRange, playerLayer);
+
+        if (isPlayerInAttackRange)
+        {
+            currentState = EnemyState.Attack;
+        }
+        else if (isPlayerInDetectionRange)
+        {
+            currentState = EnemyState.Chase;
+        }
+        else
+        {
+            currentState = EnemyState.Patrol;
+        }
+
+        // Durum geçiþini kontrol et
+        if (currentState == EnemyState.Attack && previousState != EnemyState.Attack)
+        {
+            pathfinding.enabled = false;
+            rb.velocity = Vector2.zero;
+        }
+        if (currentState != EnemyState.Attack && previousState == EnemyState.Attack)
+        {
+            pathfinding.enabled = true;
         }
     }
 
-    // Rastgele bir yön vektörü oluþturan yardýmcý bir fonksiyon.
-    private Vector2 GetRoamingPosition()
+
+    // 3. Eyleme Geçme (Her fizik güncellemesinde çalýþýr)
+    void FixedUpdate()
     {
-        // X ve Y eksenlerinde -1 ile +1 arasýnda rastgele bir deðer seç.
-        // .normalized ile bu vektörün uzunluðunu 1 birim yaparýz (sadece yönü kalýr).
-        // Bu, düþmanýn her zaman ayný hýzda ama farklý yönlere gitmesini saðlar.
-        return new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        if (playerTransform == null) return;
+
+        switch (currentState)
+        {
+            case EnemyState.Patrol:
+                HandlePatrol();
+                break;
+
+            case EnemyState.Chase:
+                // --- GÜNCELLEME BURADA ---
+                pathfinding.moveSpeed = chaseMoveSpeed; // Sabit '3f' yerine deðiþkeni kullan
+                // -------------------------
+                Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+                pathfinding.MoveTo(directionToPlayer); //
+                break;
+
+            case EnemyState.Attack:
+                HandleAttack();
+                break;
+        }
+    }
+
+    // --- PATROL FONKSÝYONLARI ---
+    private void HandlePatrol()
+    {
+        pathfinding.moveSpeed = patrolMoveSpeed;
+
+        if (Vector2.Distance(transform.position, currentPatrolTarget) < 0.5f)
+        {
+            pathfinding.MoveTo(Vector2.zero); //
+            timeSinceArrivedAtPatrolPoint += Time.fixedDeltaTime;
+
+            if (timeSinceArrivedAtPatrolPoint >= patrolWaitTime)
+            {
+                SetNewPatrolPoint();
+            }
+        }
+        else
+        {
+            Vector2 direction = (currentPatrolTarget - (Vector2)transform.position).normalized;
+            pathfinding.MoveTo(direction); //
+        }
+    }
+
+    private void SetNewPatrolPoint()
+    {
+        currentPatrolTarget = startPosition + Random.insideUnitCircle * patrolRadius;
+        timeSinceArrivedAtPatrolPoint = 0f;
+    }
+    // ------------------------------------
+
+    void HandleAttack()
+    {
+        timeSinceLastAttack += Time.fixedDeltaTime;
+        if (timeSinceLastAttack >= attackCooldown)
+        {
+            timeSinceLastAttack = 0f;
+            myAnimator.SetTrigger("Attack"); //
+        }
+    }
+
+    // Animasyon Olayý (Event) tarafýndan çaðrýlýr
+    public void ApplyAttackLunge()
+    {
+        if (playerTransform == null) return;
+        Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+        rb.AddForce(directionToPlayer * lungeForce, ForceMode2D.Impulse); //
+    }
+
+    // Gizmo'lar (Sahnede alanlarý görmek için)
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(startPosition, patrolRadius);
     }
 }

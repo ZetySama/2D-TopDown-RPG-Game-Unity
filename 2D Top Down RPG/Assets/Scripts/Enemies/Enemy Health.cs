@@ -76,7 +76,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void DetectDeath()
     {
-        if (currentHealth <= 0 && !isDead)
+        if (currentHealth <= 0 && !isDead) 
         {
             isDead = true;
             Debug.Log(gameObject.name + " öldü!");

@@ -6,12 +6,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; } }
+    public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
     public static PlayerController Instance;
 
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float dashSpeed = 4f;
     [SerializeField] private TrailRenderer myTrailRenderer;
+
+    // --- YENÝ SES DEÐÝÞKENÝ ---
+    [Tooltip("Dash AudioSource'u")]
+    [SerializeField] private AudioSource dashSound; // <-- YENÝ
+    // ----------------------------
 
     private PlayerControls playerControls;
     private Vector2 movement;
@@ -28,7 +33,7 @@ public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; }
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         myAanimator = GetComponent<Animator>();
-        mySpriteRender = GetComponent<SpriteRenderer>(); 
+        mySpriteRender = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -39,6 +44,11 @@ public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; }
     private void OnEnable()
     {
         playerControls.Enable();
+    }
+
+    private void OnDisable() // <-- EKSÝK METOT (Eklemeniz iyi bir pratiktir)
+    {
+        playerControls.Disable();
     }
 
     private void PlayerInput()
@@ -60,7 +70,7 @@ public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; }
     }
     private void FixedUpdate()
     {
-        AdjustPlayerFacingDirection(); 
+        AdjustPlayerFacingDirection();
         Move();
     }
 
@@ -73,12 +83,12 @@ public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; }
         {
             mySpriteRender.flipX = true;
             FacingLeft = true;
-    }
+        }
         else
         {
             mySpriteRender.flipX = false;
             FacingLeft = false;
-    }
+        }
 
     }
     private void Dash()
@@ -88,6 +98,14 @@ public bool FacingLeft { get { return facingLeft; }  set { facingLeft = value; }
             isDashing = true;
             moveSpeed *= dashSpeed;
             myTrailRenderer.emitting = true;
+
+            // --- YENÝ SES ÇALMA KODU ---
+            if (dashSound != null)
+            {
+                dashSound.Play(); // <-- YENÝ
+            }
+            // ---------------------------
+
             StartCoroutine(EndDashRoutine());
         }
     }
