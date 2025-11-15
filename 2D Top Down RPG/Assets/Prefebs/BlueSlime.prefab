@@ -749,12 +749,16 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackCooldown: 1
+  attackCooldown: 2
   lungeForce: 4
   patrolMoveSpeed: 3
   chaseMoveSpeed: 5
-  patrolWaitTime: 1
+  patrolWaitTime: 0.5
   patrolRadius: 5
+  wallCheckDistance: 3
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!114 &8751193666702669285
 MonoBehaviour:
   m_ObjectHideFlags: 0
