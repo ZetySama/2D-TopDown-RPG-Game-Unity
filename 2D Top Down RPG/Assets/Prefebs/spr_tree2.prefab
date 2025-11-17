@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4446745047298775612}
   - component: {fileID: 6045978238189641710}
   - component: {fileID: 4696066882416587}
+  - component: {fileID: 5575254582664668567}
+  - component: {fileID: 915223516557909366}
   m_Layer: 0
   m_Name: spr_tree2
   m_TagString: Untagged
@@ -128,3 +130,53 @@ CapsuleCollider2D:
   m_Offset: {x: 0.012489802, y: -0.20631206}
   m_Size: {x: 0.77174103, y: 0.7240478}
   m_Direction: 1
+--- !u!114 &5575254582664668567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279222815801392640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8adf7f5d1c7ed524c83c390d5dfc2dd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransparentDetection
+  transparencyAmount: 0.8
+  fadeTime: 0.4
+--- !u!58 &915223516557909366
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279222815801392640}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.11489344, y: 1.6595348}
+  m_Radius: 1.1711963
