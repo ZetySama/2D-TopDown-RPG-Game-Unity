@@ -19,12 +19,22 @@ public class DistanceBasedAudio : MonoBehaviour
         float distance = Vector3.Distance(player.position, transform.position);
 
         // 2. Mesafeye göre ses seviyesini (yüzdesini) hesapla
-        // Yakýnsa 1.0 (örn: 1 - 0/5 = 1.0)
-        // Uzaksa 0.0 (örn: 1 - 5/5 = 0.0)
         float volumePercent = 1f - (distance / maxDistance);
 
         // 3. Bulunan yüzdeyi 'maxVolume' ile çarparak nihai sesi ayarla
-        // ve Mathf.Clamp01 ile 0-1 aralýðýnda kalmasýný garantile.
         audioSource.volume = Mathf.Clamp01(volumePercent * maxVolume);
+    }
+
+    // --- YENÝ EKLENEN FONKSÝYON ---
+    // Bu fonksiyon SADECE Unity Editör'de çalýþýr
+    // ve objeyi Sahnede seçtiðinizde görünür hale gelir.
+    private void OnDrawGizmosSelected()
+    {
+        // 1. Gizmo'nun (çizginin) rengini beyaz yap
+        Gizmos.color = Color.white;
+
+        // 2. Bu objenin pozisyonunu (transform.position) merkez alarak,
+        // 'maxDistance' yarýçapýnda bir daire (WireSphere) çiz
+        Gizmos.DrawWireSphere(transform.position, maxDistance);
     }
 }

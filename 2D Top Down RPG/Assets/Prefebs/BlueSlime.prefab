@@ -156,7 +156,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 9a25934766555b944a755b8641bb4b56, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -744,16 +744,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8638d8d69d4f44446afff524fe7b917c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  detectionRange: 10
+  detectionRange: 12
   attackRange: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackCooldown: 2
-  lungeForce: 4
+  attackCooldown: 1
+  lungeForce: 5
   patrolMoveSpeed: 3
   chaseMoveSpeed: 5
-  patrolWaitTime: 0.5
+  patrolWaitTime: 1
   patrolRadius: 5
   wallCheckDistance: 3
   wallLayer:
