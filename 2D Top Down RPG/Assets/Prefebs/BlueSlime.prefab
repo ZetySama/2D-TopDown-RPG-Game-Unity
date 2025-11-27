@@ -772,6 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPathFinding
   moveSpeed: 3
+  originalFacingDirection: 1
 --- !u!95 &1860789903011541024
 Animator:
   serializedVersion: 7
