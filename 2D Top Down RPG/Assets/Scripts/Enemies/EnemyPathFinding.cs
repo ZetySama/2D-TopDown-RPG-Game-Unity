@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyPathfinding : MonoBehaviour
 {
-    public float moveSpeed = 2f;
+    // Inspector'da gizle ama diðer script'lerin eriþimine açýk tut
+    [HideInInspector] public float moveSpeed;
 
     public enum FacingDirection { Left, Right }
 
