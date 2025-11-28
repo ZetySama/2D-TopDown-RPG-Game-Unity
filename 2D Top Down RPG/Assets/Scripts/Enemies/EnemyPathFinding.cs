@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPathfinding : MonoBehaviour
 {
-    // Inspector'da gizle ama diðer script'lerin eriþimine açýk tut
+    // Inspector'da gizle ama EnemyAI eriþebilsin
     [HideInInspector] public float moveSpeed;
 
     public enum FacingDirection { Left, Right }
@@ -17,10 +17,18 @@ public class EnemyPathfinding : MonoBehaviour
     private Vector2 moveDir;
     private Knockback knockback;
 
+    // --- YENÝ: Animator Referansý ---
+    private Animator myAnimator;
+    // --------------------------------
+
     private void Awake()
     {
         knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
+
+        // --- YENÝ: Animator'ü al ---
+        myAnimator = GetComponent<Animator>();
+        // ---------------------------
     }
 
     private void FixedUpdate()
@@ -28,6 +36,26 @@ public class EnemyPathfinding : MonoBehaviour
         if (knockback.gettingKnockedBack) { return; }
 
         rb.MovePosition(rb.position + moveDir * (moveSpeed * Time.fixedDeltaTime));
+
+        // --- GÜNCELLENMÝÞ ANÝMASYON KONTROLÜ ---
+        // Eðer hareket yönümüz (moveDir) sýfýr deðilse, hareket ediyoruz demektir.
+        if (myAnimator != null)
+        {
+            // Hareket durumunu hesapla
+            bool isMoving = moveDir.magnitude > 0.1f;
+
+            // ÖNEMLÝ: Sadece "isMoving" parametresi varsa set etmeye çalýþ
+            // (Böylece BlueSlime gibi bu parametreye sahip olmayanlar hata vermez)
+            foreach (AnimatorControllerParameter param in myAnimator.parameters)
+            {
+                if (param.name == "isMoving")
+                {
+                    myAnimator.SetBool("isMoving", isMoving);
+                    break; // Parametreyi bulduk ve ayarladýk, döngüden çýk
+                }
+            }
+        }
+        // --------------------------------
 
         AdjustFacingDirection();
     }

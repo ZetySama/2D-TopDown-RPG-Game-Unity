@@ -750,15 +750,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackCooldown: 1
+  lockStateOnAttack: 0
   lungeForce: 5
+  explosionRadius: 3
+  drawExplosionGizmo: 1
   patrolMoveSpeed: 3
   chaseMoveSpeed: 5
   patrolWaitTime: 1
   patrolRadius: 5
-  wallCheckDistance: 3
+  wallCheckDistance: 2
   wallLayer:
     serializedVersion: 2
     m_Bits: 768
+  maxPatrolDuration: 4
 --- !u!114 &8751193666702669285
 MonoBehaviour:
   m_ObjectHideFlags: 0
